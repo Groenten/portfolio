@@ -8,9 +8,11 @@ interface Props {
 }
 const { lang } = Astro.props;
 
-const projects = (await getCollection("projects")).sort(
-  (a, b) => b.data.year - a.data.year
-);
+const projects = (await getCollection("projects")).sort((a, b) => {
+  const oa = a.data.order ?? 999;
+  const ob = b.data.order ?? 999;
+  return oa - ob || b.data.year - a.data.year;
+});
 const qrs: Record<string, string> = {};
 for (const p of projects) {
   if (p.data.demo) {
@@ -20,6 +22,7 @@ for (const p of projects) {
 
 function thumb(p: (typeof projects)[number]) {
   const v = p.data.video;
+  if (p.data.thumbnail) return p.data.thumbnail;
   if (!v) return null;
   if (v.type === "youtube") return `https://i.ytimg.com/vi/${v.id}/hqdefault.jpg`;
   return v.poster ?? null;
@@ -33,12 +36,24 @@ const labels = {
 <ul class="grid">
   {projects.map((p) => (
     <li>
-      <button class="card" type="button" data-open={p.id}>
-        {thumb(p) && <img src={thumb(p)!} alt="" loading="lazy" />}
-        <h2>{p.data.title[lang]}</h2>
-        <p class="meta">{p.data.year} · {p.data.category}</p>
-        <p>{p.data.summary[lang]}</p>
-      </button>
+      <button
+  class="card"
+  type="button"
+  data-open={p.id}
+  data-ptype={p.data.video?.type}
+  data-pid={p.data.video?.type === "youtube" ? p.data.video.id : undefined}
+  data-psrc={p.data.video?.type === "file" ? p.data.video.src : undefined}
+>
+  {(thumb(p) || p.data.video) && (
+    <div class="thumb">
+      {thumb(p) && <img src={thumb(p)!} alt="" loading="lazy" />}
+      <div class="preview"></div>
+    </div>
+  )}
+  <h2>{p.data.title[lang]}</h2>
+  <p class="meta">{p.data.year} · {p.data.category}</p>
+  <p>{p.data.summary[lang]}</p>
+</button>
 
       <dialog id={`dlg-${p.id}`}>
         <div class="panel">
@@ -83,6 +98,7 @@ const labels = {
         media.innerHTML = `<video src="${src}" controls autoplay playsinline class="${vertical ? "vertical" : ""}"></video>`;
       }
       dlg.showModal();
+      btn.querySelector<HTMLElement>(".preview")!.innerHTML = "";
     });
   });
 
@@ -97,6 +113,30 @@ const labels = {
       if (media) media.innerHTML = "";
     });
   });
+if (window.matchMedia("(hover: hover)").matches) {
+  document.querySelectorAll<HTMLButtonElement>(".card").forEach((card) => {
+    const preview = card.querySelector<HTMLElement>(".preview");
+    if (!preview) return;
+    const { ptype, pid, psrc } = card.dataset;
+    let timer: number | undefined;
+
+    card.addEventListener("pointerenter", () => {
+      timer = window.setTimeout(() => {
+        if (ptype === "youtube") {
+          preview.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${pid}?autoplay=1&mute=1&controls=0&loop=1&playlist=${pid}&playsinline=1&rel=0&disablekb=1" allow="autoplay" tabindex="-1"></iframe>`;
+        } else if (ptype === "file") {
+          preview.innerHTML = `<video src="${psrc}" muted loop autoplay playsinline></video>`;
+        }
+      }, 400);
+    });
+
+    card.addEventListener("pointerleave", () => {
+      clearTimeout(timer);
+      preview.innerHTML = "";
+    });
+  });
+}
+
 </script>
 
 <style>
@@ -118,12 +158,37 @@ const labels = {
     outline: 2px solid currentColor;
     outline-offset: 4px;
   }
-  .card img {
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    object-fit: cover;
-    display: block;
-  }
+  .card {
+  position: relative;
+  transition: transform 0.2s ease;
+}
+.card:hover {
+  transform: scale(1.05);
+  z-index: 2;
+}
+.thumb {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+.thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.preview {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.preview :global(iframe),
+.preview :global(video) {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  object-fit: cover;
+}
   .meta {
     font-size: 0.9rem;
     opacity: 0.7;

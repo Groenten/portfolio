@@ -1,0 +1,183 @@
+---
+import { getCollection } from "astro:content";
+import type { Lang } from "../i18n/ui";
+import QRCode from "qrcode";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+
+const projects = (await getCollection("projects")).sort(
+  (a, b) => b.data.year - a.data.year
+);
+const qrs: Record<string, string> = {};
+for (const p of projects) {
+  if (p.data.demo) {
+    qrs[p.id] = await QRCode.toDataURL(p.data.demo, { margin: 1, width: 240 });
+  }
+}
+
+function thumb(p: (typeof projects)[number]) {
+  const v = p.data.video;
+  if (!v) return null;
+  if (v.type === "youtube") return `https://i.ytimg.com/vi/${v.id}/hqdefault.jpg`;
+  return v.poster ?? null;
+}
+
+const labels = {
+  es: { close: "Cerrar", tools: "Herramientas", demo: "Probar", scan: "Escanea con tu móvil" },
+  en: { close: "Close", tools: "Tools", demo: "Try it", scan: "Scan with your phone" },
+}[lang];
+---
+<ul class="grid">
+  {projects.map((p) => (
+    <li>
+      <button class="card" type="button" data-open={p.id}>
+        {thumb(p) && <img src={thumb(p)!} alt="" loading="lazy" />}
+        <h2>{p.data.title[lang]}</h2>
+        <p class="meta">{p.data.year} · {p.data.category}</p>
+        <p>{p.data.summary[lang]}</p>
+      </button>
+
+      <dialog id={`dlg-${p.id}`}>
+        <div class="panel">
+          <button class="close" type="button" aria-label={labels.close}>×</button>
+          <div
+            class="media"
+            data-type={p.data.video?.type}
+            data-id={p.data.video?.type === "youtube" ? p.data.video.id : undefined}
+            data-src={p.data.video?.type === "file" ? p.data.video.src : undefined}
+            data-vertical={p.data.video?.type === "file" && p.data.video.vertical ? "1" : undefined}
+          ></div>
+          <h2>{p.data.title[lang]}</h2>
+          <p>{(p.data.description ?? p.data.summary)[lang]}</p>
+          {p.data.tools.length > 0 && (
+            <p class="meta">{labels.tools}: {p.data.tools.join(" · ")}</p>
+          )}
+          {p.data.demo && (
+  <div class="demo">
+    <img class="qr" src={qrs[p.id]} alt="QR" width="120" height="120" />
+    <div>
+      <p><strong>{labels.scan}</strong></p>
+      <p><a href={p.data.demo} target="_blank" rel="noopener">{labels.demo} →</a></p>
+    </div>
+  </div>
+)}
+        </div>
+      </dialog>
+    </li>
+  ))}
+</ul>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>("[data-open]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const dlg = document.getElementById(`dlg-${btn.dataset.open}`) as HTMLDialogElement;
+      const media = dlg.querySelector<HTMLElement>(".media")!;
+      const { type, id, src, vertical } = media.dataset;
+
+      if (type === "youtube") {
+        media.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
+      } else if (type === "file") {
+        media.innerHTML = `<video src="${src}" controls autoplay playsinline class="${vertical ? "vertical" : ""}"></video>`;
+      }
+      dlg.showModal();
+    });
+  });
+
+  document.querySelectorAll<HTMLDialogElement>("dialog").forEach((dlg) => {
+    dlg.addEventListener("click", (e) => {
+      if (e.target === dlg) dlg.close();
+    });
+    dlg.querySelector(".close")?.addEventListener("click", () => dlg.close());
+    dlg.querySelector(".demo a")?.addEventListener("click", () => dlg.close());
+    dlg.addEventListener("close", () => {
+      const media = dlg.querySelector(".media");
+      if (media) media.innerHTML = "";
+    });
+  });
+</script>
+
+<style>
+  .grid {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.5rem;
+  }
+  .card {
+    all: unset;
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    cursor: pointer;
+  }
+  .card:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 4px;
+  }
+  .card img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    display: block;
+  }
+  .meta {
+    font-size: 0.9rem;
+    opacity: 0.7;
+  }
+  dialog {
+    border: none;
+    padding: 0;
+    width: min(900px, 92vw);
+    max-height: 90vh;
+    overflow: auto;
+    border-radius: 8px;
+  }
+  dialog::backdrop {
+    background: rgba(0, 0, 0, 0.7);
+  }
+  .panel {
+    padding: 1.5rem;
+  }
+  .close {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.75rem;
+    font-size: 1.75rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 1;
+  }
+  .media :global(iframe),
+  .media :global(video) {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: 0;
+    display: block;
+    background: #000;
+  }
+  .media :global(video.vertical) {
+    aspect-ratio: auto;
+    width: auto;
+    max-height: 70vh;
+    margin: 0 auto;
+  }
+  .demo {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+.qr {
+  background: #fff;
+  padding: 4px;
+}
+@media (hover: none) and (pointer: coarse) {
+  .qr {
+    display: none;
+  }
+}
+</style>

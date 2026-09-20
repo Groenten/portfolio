@@ -1,0 +1,38 @@
+:root {
+  --fuente: system-ui, sans-serif;
+  --ancho-max: 1000px;
+}
+
+body {
+  font-family: var(--fuente);
+  max-width: var(--ancho-max);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  line-height: 1.6;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 0;
+}
+
+nav {
+  display: flex;
+  gap: 1.5rem;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+footer {
+  padding: 3rem 0 2rem;
+  font-size: 0.9rem;
+}

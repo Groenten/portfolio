@@ -1,0 +1,37 @@
+---
+import "../styles/global.css";
+import { getLang, useTranslations, switchLangPath } from "../i18n/ui";
+
+const { title = "Elena G. Verduras" } = Astro.props;
+const lang = getLang(Astro.url.pathname);
+const t = useTranslations(lang);
+const prefix = lang === "es" ? "" : "/en";
+const otherLang = lang === "es" ? "en" : "es";
+const otherUrl = switchLangPath(Astro.url.pathname, lang);
+---
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <header>
+      <a href={`${prefix}/`}>Elena G. Verduras</a>
+      <nav>
+        <a href={`${prefix}/`}>{t("nav.projects")}</a>
+        <a href={`${prefix}/about`}>{t("nav.about")}</a>
+        <a href={`${prefix}/contact`}>{t("nav.contact")}</a>
+        <a href={otherUrl} hreflang={otherLang} lang={otherLang}>
+          {otherLang.toUpperCase()}
+        </a>
+      </nav>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer>© 2026 Elena G. Verduras</footer>
+  </body>
+</html>

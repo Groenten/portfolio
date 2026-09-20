@@ -1,43 +1,32 @@
-# Astro Starter Kit: Minimal
+# Elena G. Verduras · Portfolio
 
-```sh
-npm create astro@latest -- --template minimal
+Web personal de composición, audiovisual y proyectos interactivos.
+Hecha con [Astro](https://astro.build), en español (idioma principal) e inglés (`/en`).
+
+## Arrancar en local
+
+```bash
+npm install
+npm run dev
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Se abre en http://localhost:4321
 
-## 🚀 Project Structure
+## Añadir un proyecto
 
-Inside of your Astro project, you'll see the following folders and files:
+1. Crea un archivo `.md` en `src/content/projects/` (copia uno existente).
+2. Rellena título y textos en `es` y `en`, año, categoría y herramientas.
+3. Añade el vídeo en el bloque `video:`:
+   - YouTube: `type: youtube` y el `id` del vídeo.
+   - Archivo propio: `type: file`, con `src` (en `public/videos/`) y `poster` (en `public/posters/`).
+4. Si tiene demo, añade `demo:` con el enlace.
+5. Con `featured: true` aparece destacado.
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+## Estructura
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- `src/content/projects/`: un archivo por proyecto
+- `src/content.config.ts`: los campos que tiene cada proyecto
+- `src/components/ProjectList.astro`: tarjetas y ventana ampliada
+- `src/i18n/ui.ts`: textos del menú en cada idioma
+- `src/pages/`: páginas (español) y `src/pages/en/` (inglés)
+- `public/videos/` y `public/posters/`: vídeos comprimidos e imágenes

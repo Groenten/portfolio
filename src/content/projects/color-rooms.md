@@ -17,7 +17,7 @@ video:
   src: '/videos/color-rooms.mp4'
   poster: '/posters/color-rooms.jpg'
   vertical: true
+order: 2
 featured: true
 ---
 
-color-

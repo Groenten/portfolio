@@ -25,6 +25,7 @@ const projects = defineCollection({
       ])
       .optional(),
     demo: z.string().url().optional(),
+    startAt: z.number().optional(),
     featured: z.boolean().default(false),
     order: z.number().optional(),
     thumbnail: z.string().optional()
@@ -32,3 +33,4 @@ const projects = defineCollection({
 })
 
 export const collections = { projects }
+//para que empiecen antes los videos:

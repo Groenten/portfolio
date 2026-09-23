@@ -2,6 +2,42 @@
 import Layout from "../../layouts/Layout.astro";
 ---
 <Layout title="About">
-  <h1>About</h1>
-  <p>Your text will go here.</p>
+  <div class="about">
+    <img src="/photos/elena.jpg" alt="Elena G. Verduras" class="portrait" />
+    <div class="text">
+      <h1>About</h1>
+      <p>Elena Garcia Verduras is a composer, cellist and sound video artist based in Madrid. She began her studies in advertisement in Madrid, Spain, while studying cello and playing in a youth orchestra. Intrigued by how music is made and the contemporary music scene in the Netherlands, she moved to Rotterdam to study music composition with Hans Koolmees and René Uijlenhoet at Codarts. During the final years of her compositional studies she started introducing video as a new tool to structure music, which became the way into defining her own practice.</p>
+
+      <p>She completed her master's studies at Codarts Hogeschool in combination with the WDKA, and since then creates audiovisual works that merge these two disciplines, exploring how their relationship can enhance her creative process.</p>
+
+      <p>More recently, she has extended her practice into programming: trained in Multiplatform Application Development, she works with programmed sound (SuperCollider, Max/MSP) and Android development to create interactive pieces that respond to movement and space, such as Color Rooms or Sonic Memory. Her work now moves between composition, video and code.</p>
+
+      <p>When not playing with her synthesisers, she splits her time between biking in the countryside and pampering her cat Rita.</p>
+    </div>
+  </div>
 </Layout>
+
+<style>
+  .about {
+    display: flex;
+    gap: 2.5rem;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+.portrait {
+  width: 380px;
+  max-width: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+  align-self: flex-start;
+  margin-top: 3.5rem;
+}
+  .text {
+    flex: 1;
+    min-width: 280px;
+  }
+  .text p {
+    margin-bottom: 1.2rem;
+  }
+
+</style>

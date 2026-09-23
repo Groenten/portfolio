@@ -33,6 +33,7 @@ const labels = {
   en: { close: "Close", tools: "Tools", demo: "Try it", scan: "Scan with your phone" },
 }[lang];
 ---
+<section class="shelf">
 <ul class="grid">
   {projects.map((p) => (
     <li>
@@ -40,6 +41,8 @@ const labels = {
   class="card"
   type="button"
   data-open={p.id}
+  data-start={p.data.startAt}
+  data-pstart={p.data.startAt}
   data-ptype={p.data.video?.type}
   data-pid={p.data.video?.type === "youtube" ? p.data.video.id : undefined}
   data-psrc={p.data.video?.type === "file" ? p.data.video.src : undefined}
@@ -84,6 +87,7 @@ const labels = {
     </li>
   ))}
 </ul>
+</section>
 
 <script>
   document.querySelectorAll<HTMLButtonElement>("[data-open]").forEach((btn) => {
@@ -91,12 +95,14 @@ const labels = {
       const dlg = document.getElementById(`dlg-${btn.dataset.open}`) as HTMLDialogElement;
       const media = dlg.querySelector<HTMLElement>(".media")!;
       const { type, id, src, vertical } = media.dataset;
+      const start = btn.dataset.start ? Number(btn.dataset.start) : 0;
 
-      if (type === "youtube") {
-        media.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
-      } else if (type === "file") {
-        media.innerHTML = `<video src="${src}" controls autoplay playsinline class="${vertical ? "vertical" : ""}"></video>`;
-      }
+if (type === "youtube") {
+  media.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&start=${start}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
+} else if (type === "file") {
+  media.innerHTML = `<video src="${src}#t=${start}" controls autoplay playsinline class="${vertical ? "vertical" : ""}"></video>`;
+}
+
       dlg.showModal();
       btn.querySelector<HTMLElement>(".preview")!.innerHTML = "";
     });
@@ -117,16 +123,17 @@ if (window.matchMedia("(hover: hover)").matches) {
   document.querySelectorAll<HTMLButtonElement>(".card").forEach((card) => {
     const preview = card.querySelector<HTMLElement>(".preview");
     if (!preview) return;
-    const { ptype, pid, psrc } = card.dataset;
+    const { ptype, pid, psrc, pstart } = card.dataset;
+    const start = pstart ? Number(pstart) : 0;
     let timer: number | undefined;
 
     card.addEventListener("pointerenter", () => {
       timer = window.setTimeout(() => {
-        if (ptype === "youtube") {
-          preview.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${pid}?autoplay=1&mute=1&controls=0&loop=1&playlist=${pid}&playsinline=1&rel=0&disablekb=1" allow="autoplay" tabindex="-1"></iframe>`;
-        } else if (ptype === "file") {
-          preview.innerHTML = `<video src="${psrc}" muted loop autoplay playsinline></video>`;
-        }
+       if (ptype === "youtube") {
+  preview.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${pid}?autoplay=1&mute=1&controls=0&loop=1&playlist=${pid}&start=${start}&playsinline=1&rel=0&disablekb=1" allow="autoplay" tabindex="-1"></iframe>`;
+} else if (ptype === "file") {
+  preview.innerHTML = `<video src="${psrc}#t=${start}" muted loop autoplay playsinline></video>`;
+}
       }, 400);
     });
 
@@ -137,13 +144,17 @@ if (window.matchMedia("(hover: hover)").matches) {
   });
 }
 
+
 </script>
 
+
 <style>
+
   .grid {
     list-style: none;
     padding: 0;
     display: grid;
+    align-items: stretch;
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: 1.5rem;
   }
@@ -158,9 +169,19 @@ if (window.matchMedia("(hover: hover)").matches) {
     outline: 2px solid currentColor;
     outline-offset: 4px;
   }
-  .card {
+.card {
+  all: unset;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  cursor: pointer;
   position: relative;
   transition: transform 0.2s ease;
+  border: 1px solid #ddd;
+  padding: 0.75rem;
 }
 .card:hover {
   transform: scale(1.05);
@@ -170,12 +191,14 @@ if (window.matchMedia("(hover: hover)").matches) {
   position: relative;
   aspect-ratio: 16 / 9;
   overflow: hidden;
+  
 }
 .thumb img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
+  
 }
 .preview {
   position: absolute;
@@ -207,6 +230,11 @@ if (window.matchMedia("(hover: hover)").matches) {
   .panel {
     padding: 1.5rem;
   }
+  .shelf {
+  background: #eeece8;
+  border-radius: 0px;
+  padding: 2rem;
+}
   .close {
     position: absolute;
     top: 0.5rem;

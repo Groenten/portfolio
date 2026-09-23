@@ -6,6 +6,7 @@ summary:
   es: 'Pieza electrónica con un sintetizador modular Synton 3000 y animación stop-motion.'
   en: 'Electronic piece using a Synton 3000 system modular synthesizer and stop-motion animation.'
 year: 2020
+startAt: 40
 category: audiovisual
 tools: ['Modular synthesizer', 'Stop-motion']
 video:

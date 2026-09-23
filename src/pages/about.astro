@@ -2,6 +2,44 @@
 import Layout from "../layouts/Layout.astro";
 ---
 <Layout title="Sobre mí">
+  <div class="about">
+    <img src="/photos/elena.jpg" alt="Elena G. Verduras" class="portrait" />
+    <div class="text">
+      <div class="text">
   <h1>Sobre mí</h1>
-  <p>Aquí irá tu texto.</p>
+  <p>Elena García Verduras es compositora, violonchelista y artista audiovisual, radicada en Madrid. Comenzó sus estudios en publicidad en Madrid, España, mientras tocaba el violonchelo en una orquesta juvenil. Intrigada por la creación musical y la escena contemporánea en los Países Bajos, se trasladó a Róterdam para estudiar composición musical con Hans Koolmees y René Uijlenhoet en Codarts. Durante los últimos años de sus estudios de composición, empezó a introducir el vídeo como una nueva herramienta para estructurar la música, lo que la llevó a definir su propia práctica artística.</p>
+
+  <p>Completó su máster en Codarts Hogeschool en colaboración con la WDKA, y desde entonces crea obras audiovisuales que fusionan ambas disciplinas, explorando cómo su relación puede enriquecer su proceso creativo.</p>
+
+  <p>Más recientemente, ha ampliado su práctica hacia la programación: formada en Desarrollo de Aplicaciones Multiplataforma, trabaja con sonido programado (SuperCollider, Max/MSP) y desarrollo Android para crear piezas interactivas que responden al movimiento y al espacio, como Color Rooms o Sonic Memory. Su trabajo se mueve así entre la composición, el vídeo y el código.</p>
+
+  <p>Cuando no está experimentando con sus sintetizadores, divide su tiempo entre paseos en bicicleta por el campo y mimar a su gata Rita.</p>
+</div>
+    </div>
+  </div>
 </Layout>
+
+<style>
+  .about {
+    display: flex;
+    gap: 2.5rem;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .portrait {
+  width: 380px;
+  max-width: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+  align-self: flex-start;
+  margin-top: 3.5rem;
+}
+  .text {
+    flex: 1;
+    min-width: 280px;
+  }
+  .text p {
+    margin-bottom: 1.2rem;
+  }
+
+</style>

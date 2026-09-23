@@ -1,13 +1,19 @@
 ---
 title:
-  es: "All day I heard the Sounds of Waters"
-  en: "All day I heard the Sounds of Waters"
+  es: 'All day I heard the Sounds of Waters'
+  en: 'All day I heard the Sounds of Waters'
 summary:
-  es: "El ruido y el agua se filtraban por las paredes, y también los pensamientos. Recopilación de sonidos de sintetizador que manipulé durante mis estudios."
-  en: "Noise and water seeped in through the walls, and so did thoughts. A compendium of synthesiser sounds I manipulated during my studies."
+  es: 'El ruido y el agua se filtraban por las paredes, y también los pensamientos. Recopilación de sonidos de sintetizador que manipulé durante mis estudios.'
+  en: 'Noise and water seeped in through the walls, and so did thoughts. A compendium of synthesiser sounds I manipulated during my studies.'
 year: 2022
+startAt: 40
 category: audiovisual
-tools: ["Synthesisers"]
+tools: ['Synthesisers']
 order: 12
+video:
+  type: youtube
+  id: 'kqQfJ5syTOA'
+
+thumbnail: 'posters/alldayiheard.jpg'
 featured: false
 ---

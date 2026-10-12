@@ -2,6 +2,7 @@
 import "../styles/global.css";
 import { getLang, useTranslations, switchLangPath } from "../i18n/ui";
 import Analytics from '@vercel/analytics/astro';
+import SpeedInsights from '@vercel/speed-insights/astro';
 
 const { title = "Elena G. Verduras" } = Astro.props;
 const lang = getLang(Astro.url.pathname);
@@ -36,5 +37,6 @@ const otherUrl = switchLangPath(Astro.url.pathname, lang);
 
     <footer>© 2026 Elena G. Verduras</footer>
     <Analytics />
+    <SpeedInsights />
   </body>
 </html>

@@ -1,27 +1,55 @@
+/* ========================================
+   VARIABLES
+======================================== */
+
 :root {
   --fuente: system-ui, sans-serif;
   --ancho-max: 1000px;
+  --ancho-texto: 680px;
+
+  --color-texto: #202020;
+  --color-secundario: #777;
+  --color-linea: #e5e5e5;
+}
+
+/* ========================================
+   BASE
+======================================== */
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   font-family: var(--fuente);
+  color: var(--color-texto);
   max-width: var(--ancho-max);
   margin: 0 auto;
   padding: 0 1.5rem;
   line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
 }
 
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.5rem 0;
+h1,
+h2,
+h3 {
+  line-height: 1.15;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
 }
 
-nav {
-  display: flex;
-  gap: 1.5rem;
+p {
+  text-wrap: pretty;
 }
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ========================================
+   ENLACES
+======================================== */
 
 a {
   color: inherit;
@@ -30,9 +58,229 @@ a {
 
 a:hover {
   text-decoration: underline;
+  text-underline-offset: 5px;
 }
+
+a:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 5px;
+}
+
+/* ========================================
+   NAVEGACIÓN
+======================================== */
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--color-linea);
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+nav a {
+  font-size: 0.9rem;
+  transition: opacity 180ms ease;
+}
+
+nav a:hover {
+  opacity: 0.6;
+  text-decoration: none;
+}
+
+/* ========================================
+   ENCABEZADOS DE PÁGINA
+======================================== */
+
+/* ENCABEZADOS DE PÁGINA */
+
+.page-heading {
+  padding: 3rem 0 1.5rem;
+}
+
+.page-heading h1 {
+  font-size: clamp(2.8rem, 6vw, 4rem);
+  line-height: 1.05;
+  letter-spacing: -0.055em;
+  font-weight: 500;
+  margin: 0 0 0.75rem;
+}
+
+.page-heading p {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--color-secundario);
+  margin: 0;
+}
+
+@media (max-width: 600px) {
+  .page-heading {
+    padding-top: 2rem;
+  }
+}
+
+/* ========================================
+   CONTACTO
+======================================== */
+
+.contact-page {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 5rem 0 3rem;
+}
+
+.contact-intro {
+  max-width: 650px;
+  margin-bottom: 3rem;
+}
+
+.contact-eyebrow {
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  font-weight: 600;
+  opacity: 0.6;
+  margin-bottom: 1.25rem;
+}
+
+.contact-page h1 {
+  font-size: clamp(2.8rem, 6vw, 4rem);
+  line-height: 1.05;
+  letter-spacing: -0.055em;
+  font-weight: 500;
+  margin: 0 0 2rem;
+}
+
+.contact-lead {
+  max-width: 560px;
+  font-size: 1.15rem;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+.contact-description {
+  max-width: 600px;
+  font-size: 1rem;
+  line-height: 1.8;
+  opacity: 0.75;
+}
+
+.contact-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 3rem;
+}
+
+.contact-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+  min-width: 0;
+  padding: 1.5rem;
+  border: 1px solid var(--color-linea);
+  border-radius: 2px;
+  transition:
+    border-color 180ms ease,
+    background-color 180ms ease,
+    transform 180ms ease;
+}
+
+.contact-card:hover {
+  background-color: #fafafa;
+  border-color: #bdbdbd;
+  text-decoration: none;
+  transform: translateY(-3px);
+}
+
+.contact-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  opacity: 0.6;
+}
+
+.contact-value {
+  font-size: 1rem;
+  overflow-wrap: anywhere;
+}
+
+.contact-action {
+  margin-top: auto;
+  padding-top: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.contact-note {
+  margin-top: 2rem;
+  font-size: 0.9rem;
+  opacity: 0.65;
+}
+
+/* ========================================
+   PIE DE PÁGINA
+======================================== */
 
 footer {
   padding: 3rem 0 2rem;
+  border-top: 1px solid var(--color-linea);
+  color: var(--color-secundario);
   font-size: 0.9rem;
+}
+
+/* ========================================
+   ACCESIBILIDAD
+======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+/* ========================================
+   MÓVIL
+======================================== */
+
+@media (max-width: 600px) {
+  header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  nav {
+    gap: 0.85rem;
+  }
+
+  .page-heading {
+    padding-top: 3rem;
+  }
+
+  .contact-page {
+    padding-top: 3rem;
+  }
+
+  .contact-options {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-card {
+    padding: 1.25rem;
+  }
 }

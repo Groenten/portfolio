@@ -10,5 +10,6 @@ startAt: 40
 category: audiovisual
 tools: ['Stop-motion', 'Accordion', 'Guitar', 'Ney flute', 'Clarinet']
 order: 4
+thumbnail: '/posters/paintedmotioncycle.jpg'
 featured: true
 ---

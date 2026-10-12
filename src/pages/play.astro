@@ -1,0 +1,166 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Play | Elena G. Verduras">
+  <main class="play-page">
+    <section class="page-heading">
+      <h1>Play</h1>
+      <p>Experimentos interactivos que exploran el sonido, la escucha y el código.</p>
+    </section>
+
+    <section class="card-shelf" aria-label="Juegos y experimentos">
+      <div class="play-grid">
+        <article class="play-card">
+          <a
+            class="play-image"
+            href="https://primeras-pruebas-sonic-lab-elenas-projects-a7bfdad5.vercel.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Jugar a Sonic Memory"
+          >
+            <img
+              src="/posters/sonicmemory.png"
+              alt="Sonic Memory, juego de memoria auditiva para Android"
+              class="game-thumbnail"
+            />
+          </a>
+
+          <div class="play-info">
+            <p class="play-meta">2026 · SOUND & MEMORY</p>
+            <h2>Sonic Memory</h2>
+            <p>
+              Un juego de memoria auditiva que explora la escucha,
+              la repetición y la interacción a través del sonido. 
+            </p>
+            <p class="play-meta">Prototipo web desarrollado con p5.js</p>
+<a
+  class="play-link"
+  href="https://primeras-pruebas-sonic-lab-elenas-projects-a7bfdad5.vercel.app/"
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  Probar prototipo web ↗
+</a>
+          </div>
+        </article>
+
+        <article class="play-card coming-card">
+          <div class="coming-image" aria-hidden="true">+</div>
+          <div class="play-info">
+            <p class="play-meta">EN DESARROLLO</p>
+            <h2>Más experimentos</h2>
+            <p>
+              Nuevos juegos e ideas en la intersección entre
+              sonido, código e interacción.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  .play-page {
+    padding-bottom: 3rem;
+  }
+
+  .play-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .play-card {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 0.75rem;
+    transition: transform 0.2s ease;
+  }
+
+  .play-card:hover {
+    transform: scale(1.05);
+    z-index: 2;
+  }
+
+  .play-image,
+  .coming-image {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 1 / 1;
+    background: #171717;
+    color: white;
+  }
+
+  .play-image:hover {
+    text-decoration: none;
+  }
+
+  .game-thumbnail {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .play-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.65rem;
+    padding-top: 1rem;
+  }
+
+  .play-meta {
+    margin: 0;
+    font-size: 0.75rem;
+    opacity: 0.7;
+  }
+
+  .play-info h2 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 500;
+  }
+
+  .play-info > p:not(.play-meta) {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .play-link {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    border-bottom: 1px solid currentColor;
+  }
+
+  .play-link:hover {
+    text-decoration: none;
+    opacity: 0.65;
+  }
+
+  .coming-image {
+    display: grid;
+    place-items: center;
+    font-size: 2rem;
+    opacity: 0.7;
+  }
+
+  @media (max-width: 600px) {
+    .play-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .play-card {
+      transition: none;
+    }
+  }
+</style>

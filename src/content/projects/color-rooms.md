@@ -10,6 +10,7 @@ description:
   es: 'Abre la pieza en tu móvil, permite el acceso al movimiento del dispositivo y muévelo para descubrir las habitaciones de color. Mejor con auriculares: el sonido cambia según la orientación del teléfono.'
   en: "Open the piece on your phone, allow access to the device's motion sensors and move it to explore the colour rooms. Best with headphones: the sound changes with the phone's orientation."
 year: 2026
+startAt: 40
 category: interactive
 tools: ['Web Audio', 'Gyroscope API']
 video:

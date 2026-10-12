@@ -4,8 +4,10 @@ import Layout from "../../layouts/Layout.astro";
 <Layout title="About">
   <div class="about">
     <img src="/photos/elena.jpg" alt="Elena G. Verduras" class="portrait" />
-    <div class="text">
-      <h1>About</h1>
+  <div class="text">
+  <div class="page-heading">
+    <h1>About</h1>
+  </div>
       <p>Elena Garcia Verduras is a composer, cellist and sound video artist based in Madrid. She began her studies in advertisement in Madrid, Spain, while studying cello and playing in a youth orchestra. Intrigued by how music is made and the contemporary music scene in the Netherlands, she moved to Rotterdam to study music composition with Hans Koolmees and René Uijlenhoet at Codarts. During the final years of her compositional studies she started introducing video as a new tool to structure music, which became the way into defining her own practice.</p>
 
       <p>She completed her master's studies at Codarts Hogeschool in combination with the WDKA, and since then creates audiovisual works that merge these two disciplines, exploring how their relationship can enhance her creative process.</p>
@@ -17,27 +19,55 @@ import Layout from "../../layouts/Layout.astro";
   </div>
 </Layout>
 
+
 <style>
   .about {
     display: flex;
     gap: 2.5rem;
     align-items: flex-start;
     flex-wrap: wrap;
+    padding-bottom: 3rem;
   }
-.portrait {
-  width: 380px;
-  max-width: 100%;
-  border-radius: 8px;
-  object-fit: cover;
-  align-self: flex-start;
-  margin-top: 3.5rem;
-}
+
+  .portrait {
+    width: 380px;
+    max-width: 100%;
+    border-radius: 8px;
+    object-fit: cover;
+    align-self: flex-start;
+    margin-top: 3.5rem;
+  }
+
   .text {
     flex: 1;
     min-width: 280px;
-  }
-  .text p {
-    margin-bottom: 1.2rem;
+    max-width: 650px;
   }
 
+  .text h1 {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+  }
+
+  .text p {
+    margin-bottom: 1.2rem;
+    line-height: 1.75;
+  }
+
+  @media (max-width: 700px) {
+    .about {
+      gap: 1.5rem;
+      padding-bottom: 2rem;
+    }
+
+    .portrait {
+      width: 100%;
+      margin-top: 0;
+    }
+
+    .text {
+      min-width: 0;
+      max-width: none;
+    }
+  }
 </style>

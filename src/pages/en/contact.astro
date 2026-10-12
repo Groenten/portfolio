@@ -1,11 +1,44 @@
+
 ---
 import Layout from "../../layouts/Layout.astro";
 ---
+
 <Layout title="Contact">
-  <h1>Contact</h1>
-  <p>For collaborations, commissions, or just to say hi:</p>
-  <ul>
-    <li><a href="mailto:e.garciaverduras@gmail.com">e.garciaverduras@gmail.com</a></li>
-    <li><a href="https://instagram.com/elenagarciaverduras" target="_blank" rel="noopener">Instagram</a></li>
-  </ul>
+  <main class="contact-page">
+    <section class="contact-intro">
+      <p class="contact-eyebrow">Hellou</p>
+      <h1>Contact</h1>
+      <p class="contact-lead">
+        Have an idea, a project, or a collaboration in mind?
+      </p>
+      <p class="contact-description">
+        I work at the intersection of music, technology and audiovisual art.
+        I'm open to artistic collaborations, music commissions and projects
+        exploring new ways of listening to and experiencing sound.
+      </p>
+    </section>
+
+    <section class="contact-options" aria-label="Contact options">
+      <a class="contact-card" href="mailto:e.garciaverduras@gmail.com">
+        <span class="contact-label">EMAIL</span>
+        <span class="contact-value">e.garciaverduras@gmail.com</span>
+        <span class="contact-action">Get in touch ↗</span>
+      </a>
+
+      <a
+        class="contact-card"
+        href="https://instagram.com/elenagarciaverduras"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <span class="contact-label">INSTAGRAM</span>
+        <span class="contact-value">@elenagarciaverduras</span>
+        <span class="contact-action">Follow me ↗</span>
+      </a>
+    </section>
+
+    <p class="contact-note">
+      Or simply drop me a line to say hello.
+    </p>
+  </main>
 </Layout>
